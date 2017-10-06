@@ -9,11 +9,7 @@
     for (var index = 0; index < inArray.length; index++) {
       var element = inArray[index];
       var value = inCallback.call(inArray, index, element, inArray);
-      if (typeof result[value] !== UNDEFINED) {
-        result[value].push(element);
-      } else {
-        result[value] = [element];
-      }
+      result[value] = (result[value] || []).concat( element );
     }
     return result;
   };
