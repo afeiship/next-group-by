@@ -1,0 +1,26 @@
+{
+  "name": "next-group-by",
+  "description": "Creates an object composed of keys generated from the results of running each element of collection thru iteratee. ",
+  "main": "dist/next-group-by.js",
+  "authors": [
+    "afei"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "next"
+  ],
+  "homepage": "https://github.com/afeiship/next-group-by",
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src",
+    "gulp",
+    "gulpfile.js"
+  ]
+}
