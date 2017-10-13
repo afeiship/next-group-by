@@ -11,8 +11,33 @@ describe('next/groupBy', function () {
       return item % 2;
     });
 
-    assert.equal( res1['0'].length, 4)
-    assert.equal( res1['1'].length, 5)
+    assert.equal( res1['0'].length, 4);
+    assert.equal( res1['1'].length, 5);
   });
+
+  it('nx.groupBy image type', function () {
+    var arr = [
+      'sljflsdjf.jpg',
+      'bb.jpg',
+      'bc.jpg',
+      'ccsdf.jpg',
+      'ccsdf.jpg',
+      'http://www.agc.cn/1.jpg',
+      'sldjfsld.jpg',
+      'wx://localResource'
+    ];
+
+    var res1 = nx.groupBy(arr, (_,item)=>{
+      var rs = item.split('://');
+      return rs.length === 2 ? rs[0]: 'normal';
+    });
+
+    assert.equal( res1.normal.length, 6);
+    assert.equal( res1.wx.length, 1);
+    assert.equal( res1.http.length, 1);
+  });
+
+
+
 
 });
