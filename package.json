@@ -21,8 +21,9 @@
     "gulp-rename": "^1.2.2",
     "gulp-size": "^2.1.0",
     "gulp-uglify": "^2.1.2",
-    "yargs": "^4.7.1",
-    "mocha": "^3.5.0"
+    "mocha": "^3.5.0",
+    "prettier": "^1.16.4",
+    "yargs": "^4.7.1"
   },
   "dependencies": {
     "next-js-core2": "github:afeiship/next-js-core2"
