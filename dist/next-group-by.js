@@ -1,8 +1,7 @@
 (function () {
 
-  var global = global || this || self || window;
+  var global = global || this || window || Function('return this')();
   var nx = global.nx || require('next-js-core2');
-  var UNDEFINED = 'undefined';
 
   nx.groupBy = function (inArray, inCallback) {
     var result = {};
