@@ -1,6 +1,6 @@
 {
   "name": "@feizheng/next-group-by",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Creates an object composed of keys generated from the results of running each element of collection thru iteratee.",
   "homepage": "https://github.com/afeiship/next-group-by",
   "author": {
