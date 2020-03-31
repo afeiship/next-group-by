@@ -2,8 +2,8 @@
  * name: @feizheng/next-group-by
  * description: Creates an object composed of keys generated from the results of running each element of collection thru iteratee.
  * url: https://github.com/afeiship/next-group-by
- * version: 1.0.0
- * date: 2020-03-31 23:48:46
+ * version: 1.0.1
+ * date: 2020-04-01 00:01:33
  * license: MIT
  */
 
