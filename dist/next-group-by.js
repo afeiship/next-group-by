@@ -2,21 +2,25 @@
  * name: @feizheng/next-group-by
  * description: Creates an object composed of keys generated from the results of running each element of collection thru iteratee.
  * url: https://github.com/afeiship/next-group-by
- * version: 1.0.1
- * date: 2020-04-01 00:01:33
+ * version: 1.1.0
+ * date: 2020-04-01 12:45:34
  * license: MIT
  */
 
 (function () {
   var global = global || this || window || Function('return this')();
   var nx = global.nx || require('@feizheng/next-js-core2');
+  /* prettier-ignore */
+  var RETURN_VALUE = function(_, value) { return value;}
 
-  nx.groupBy = function (inArray, inCallback) {
+  nx.groupBy = function (inArray, inCallback, inTransform) {
     var result = {};
+    var transoform = inTransform || RETURN_VALUE;
     for (var index = 0; index < inArray.length; index++) {
-      var element = inArray[index];
-      var value = inCallback.call(inArray, index, element, inArray);
-      result[value] = (result[value] || []).concat(element);
+      var value = inArray[index];
+      var key = inCallback(index, value, inArray);
+      var transformedValue = transoform(index, value, inArray);
+      result[key] = (result[key] || []).concat(transformedValue);
     }
     return result;
   };

@@ -68,15 +68,15 @@ describe('next/groupBy', function () {
     expect(res1.http.length).toBe(1);
   });
 
-  test('nx.groupBy countyCode', function () {
-    var arr = countryData;
-    var res1 = nx.groupBy(arr, (_, item) => item.countryCode.charAt(0));
-    // console.log(res1);
-  });
-
-  test('nx.group for array2', () => {
-    var data = require('./table.json');
-    var res = nx.groupBy(data, (_, item) => item.row);
-    // console.log(Object.keys(res).length);
+  test('nx.groupBy with transoform', () => {
+    var data = require('./table_slim.json');
+    var res = nx.groupBy(
+      data,
+      (_, item) => item.row,
+      (_, item) => {
+        return { row: item.row, col: item.column };
+      }
+    );
+    expect(res).toEqual({ '0': [{ row: 0, col: 0 }], '1': [{ row: 1, col: 1 }] });
   });
 });
