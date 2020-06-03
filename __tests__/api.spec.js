@@ -80,7 +80,7 @@ describe('next/groupBy', function () {
     expect(res).toEqual({ '0': [{ row: 0, col: 0 }], '1': [{ row: 1, col: 1 }] });
   });
 
-  test.only("callback is string will get key from item", () => {
+  test("callback is string will get key from item", () => {
     var data = require('./group-key.js');
     var res = nx.groupBy(data, 'action');
 
