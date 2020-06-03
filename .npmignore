@@ -15,4 +15,7 @@ jest.config.js
 LICENSE.txt
 Rakefile
 express.js
+
+# vscode
 .vscode
+.history
