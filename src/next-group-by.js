@@ -11,9 +11,7 @@
     for (var index = 0; index < inArray.length; index++) {
       var value = inArray[index];
       var key =
-        typeof inTarget === STRING
-          ? nx.get(value, inTarget)
-          : inTarget(index, value, inArray);
+        typeof inTarget === STRING ? nx.get(value, inTarget) : inTarget(index, value, inArray);
       var transformedValue = transoform(index, value, inArray);
       result[key] = (result[key] || []).concat(transformedValue);
     }
@@ -24,3 +22,4 @@
     module.exports = nx.groupBy;
   }
 })();
+

@@ -2,8 +2,8 @@
  * name: @feizheng/next-group-by
  * description: Creates an object composed of keys generated from the results of running each element of collection thru iteratee.
  * homepage: https://github.com/afeiship/next-group-by
- * version: 1.2.0
- * date: 2020-06-03T10:30:14.728Z
+ * version: 1.2.1
+ * date: 2020-08-18T11:23:08.034Z
  * license: MIT
  */
 
@@ -20,9 +20,7 @@
     for (var index = 0; index < inArray.length; index++) {
       var value = inArray[index];
       var key =
-        typeof inTarget === STRING
-          ? nx.get(value, inTarget)
-          : inTarget(index, value, inArray);
+        typeof inTarget === STRING ? nx.get(value, inTarget) : inTarget(index, value, inArray);
       var transformedValue = transoform(index, value, inArray);
       result[key] = (result[key] || []).concat(transformedValue);
     }
@@ -34,4 +32,3 @@
   }
 })();
 
-//# sourceMappingURL=next-group-by.js.map
