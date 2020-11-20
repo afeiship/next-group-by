@@ -3,7 +3,7 @@
  * description: Creates an object composed of keys generated from the results of running each element of collection thru iteratee.
  * homepage: https://github.com/afeiship/next-group-by
  * version: 1.0.0
- * date: 2020-11-20 13:21:13
+ * date: 2020-11-20 13:22:22
  * license: MIT
  */
 
