@@ -8,12 +8,12 @@
 
 ## installation
 ```bash
-npm install -S @feizheng/next-group-by
+npm install -S @jswork/next-group-by
 ```
 
 ## usage
 ```js
-import '@feizheng/next-group-by';
+import '@jswork/next-group-by';
 
 const arr = [
   'sljflsdjf.jpg',
@@ -49,14 +49,14 @@ const res = nx.groupBy(arr, (_, item) => {
 ## license
 Code released under [the MIT license](https://github.com/afeiship/next-group-by/blob/master/LICENSE.txt).
 
-[version-image]: https://img.shields.io/npm/v/@feizheng/next-group-by
-[version-url]: https://npmjs.org/package/@feizheng/next-group-by
+[version-image]: https://img.shields.io/npm/v/@jswork/next-group-by
+[version-url]: https://npmjs.org/package/@jswork/next-group-by
 
-[license-image]: https://img.shields.io/npm/l/@feizheng/next-group-by
+[license-image]: https://img.shields.io/npm/l/@jswork/next-group-by
 [license-url]: https://github.com/afeiship/next-group-by/blob/master/LICENSE.txt
 
-[size-image]: https://img.shields.io/bundlephobia/minzip/@feizheng/next-group-by
+[size-image]: https://img.shields.io/bundlephobia/minzip/@jswork/next-group-by
 [size-url]: https://github.com/afeiship/next-group-by/blob/master/dist/next-group-by.min.js
 
-[download-image]: https://img.shields.io/npm/dm/@feizheng/next-group-by
-[download-url]: https://www.npmjs.com/package/@feizheng/next-group-by
+[download-image]: https://img.shields.io/npm/dm/@jswork/next-group-by
+[download-url]: https://www.npmjs.com/package/@jswork/next-group-by

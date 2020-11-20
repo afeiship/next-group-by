@@ -1,15 +1,6 @@
-/*!
- * name: @feizheng/next-group-by
- * description: Creates an object composed of keys generated from the results of running each element of collection thru iteratee.
- * homepage: https://github.com/afeiship/next-group-by
- * version: 1.2.1
- * date: 2020-08-18T11:23:08.034Z
- * license: MIT
- */
-
 (function () {
   var global = global || this || window || Function('return this')();
-  var nx = global.nx || require('@feizheng/next-js-core2');
+  var nx = global.nx || require('@jswork/next');
   /* prettier-ignore */
   var RETURN_VALUE = function (_, value) { return value; }
   var STRING = 'string';
@@ -31,4 +22,3 @@
     module.exports = nx.groupBy;
   }
 })();
-
