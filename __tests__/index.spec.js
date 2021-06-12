@@ -111,18 +111,7 @@
         return item.file.size ? 'wx' : 'old';
       });
 
-      expect(res).toEqual({
-        old: [
-          {
-            url: 'http://42.193.4.21:8081/api/static/images/f7128c5454ef48d431315169ac1c8faf.png',
-            file: [Object]
-          },
-          {
-            url: 'http://42.193.4.21:8081/api/static/images/8ea7935faede52aa3891436fa5f0dd68.png',
-            file: [Object]
-          }
-        ]
-      });
+      expect(res).toEqual({ old: data });
     });
   });
 })();
