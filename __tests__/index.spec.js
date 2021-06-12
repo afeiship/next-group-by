@@ -77,23 +77,51 @@
           return { row: item.row, col: item.column };
         }
       );
-      expect(res).toEqual({ '0': [{ row: 0, col: 0 }], '1': [{ row: 1, col: 1 }] });
+      expect(res).toEqual({ 0: [{ row: 0, col: 0 }], 1: [{ row: 1, col: 1 }] });
     });
 
-    test("callback is string will get key from item", () => {
+    test('callback is string will get key from item', () => {
       var data = require('./group-key.js');
       var res = nx.groupBy(data, 'action');
 
       expect(res).toEqual({
         fix: [
-          { action: 'fix', message: '82b05c46 - fix: 大背景->小背景 文字错误修复' },
+          {
+            action: 'fix',
+            message: '82b05c46 - fix: 大背景->小背景 文字错误修复'
+          },
           {
             action: 'fix',
             message: 'd5d915a1 - fix: 数据:全局干扰项-block/elements为空兼容'
           },
           { action: 'fix', message: 'f0c7f827 - fix(bug): v1.9.3+' }
         ],
-        feat: [{ action: 'feat', message: '7a03355d - feat: 非文本类型均支持添加多个' }]
+        feat: [
+          {
+            action: 'feat',
+            message: '7a03355d - feat: 非文本类型均支持添加多个'
+          }
+        ]
+      });
+    });
+
+    test('pic with diff', () => {
+      var data = require('./pic.json');
+      var res = nx.groupBy(data, (_, item) => {
+        return item.file.size ? 'wx' : 'old';
+      });
+
+      expect(res).toEqual({
+        old: [
+          {
+            url: 'http://42.193.4.21:8081/api/static/images/f7128c5454ef48d431315169ac1c8faf.png',
+            file: [Object]
+          },
+          {
+            url: 'http://42.193.4.21:8081/api/static/images/8ea7935faede52aa3891436fa5f0dd68.png',
+            file: [Object]
+          }
+        ]
       });
     });
   });
