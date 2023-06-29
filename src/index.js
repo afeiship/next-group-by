@@ -1,26 +1,22 @@
-(function () {
-  var global = global || this || window || Function('return this')();
-  var nx = global.nx || require('@jswork/next');
-  /* prettier-ignore */
-  var RETURN_VALUE = function (_, value) { return value; }
-  var STRING = 'string';
+import nx from '@jswork/next';
 
-  nx.groupBy = function (inArray, inTarget, inTransform) {
-    var result = {};
-    var transoform = inTransform || RETURN_VALUE;
-    for (var index = 0; index < inArray.length; index++) {
-      var value = inArray[index];
-      var key =
-        typeof inTarget === STRING
-          ? nx.get(value, inTarget)
-          : inTarget(index, value, inArray);
-      var transformedValue = transoform(index, value, inArray);
-      result[key] = (result[key] || []).concat(transformedValue);
-    }
-    return result;
-  };
+const RETURN_VALUE = (_, value) => value;
 
-  if (typeof module !== 'undefined' && module.exports) {
-    module.exports = nx.groupBy;
+nx.groupBy = function (inArray, inTarget, inTransform) {
+  const result = {};
+  const transoform = inTransform || RETURN_VALUE;
+  for (let index = 0; index < inArray.length; index++) {
+    const value = inArray[index];
+    const isString = typeof inTarget === 'string';
+    const key = isString ? nx.get(value, inTarget) : inTarget(index, value, inArray);
+    const transformedValue = transoform(index, value, inArray);
+    result[key] = (result[key] || []).concat(transformedValue);
   }
-})();
+  return result;
+};
+
+if (typeof module !== 'undefined' && module.exports && typeof wx === 'undefined') {
+  module.exports = nx.groupBy;
+}
+
+export default nx.groupBy;
