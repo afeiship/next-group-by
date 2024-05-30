@@ -112,4 +112,79 @@ describe('next/groupBy', function() {
       }
     );
   });
+
+  test.only('group by , change computedKey', () => {
+    const data = [
+      { id: 1, name: 'a', score: 1 },
+      { id: 2, name: 'b', score: 22 },
+      { id: 3, name: 'c', score: 23 },
+      { id: 4, name: 'd', score: 45 },
+      { id: 5, name: 'e', score: 50 },
+      { id: 6, name: 'f', score: 11 },
+      { id: 7, name: 'g', score: 83 },
+      { id: 8, name: 'h', score: 90 }
+    ];
+    const res = nx.groupBy(data, (item) => {
+      if (item.score < 20) return 'l1';
+      if (item.score < 40 && item.score >= 20) return 'l2';
+      if (item.score < 60 && item.score >= 40) return 'l3';
+      if (item.score < 80 && item.score >= 60) return 'l4';
+      if (item.score >= 80) return 'l5';
+      if (item.score > 100) return 'best';
+    }, {
+      expectKeys: ['l1', 'l2', 'l3', 'l4', 'l5', 'best'],
+      computedKey: 'stats'
+    });
+    expect(res).toEqual({
+        l1: [{ id: 1, name: 'a', score: 1 }, { id: 6, name: 'f', score: 11 }],
+        l2: [{ id: 2, name: 'b', score: 22 }, { id: 3, name: 'c', score: 23 }],
+        l3: [{ id: 4, name: 'd', score: 45 }, { id: 5, name: 'e', score: 50 }],
+        l5: [{ id: 7, name: 'g', score: 83 }, { id: 8, name: 'h', score: 90 }],
+        l4: [],
+        best: [],
+        stats: {
+          l1: 2,
+          l2: 2,
+          l3: 2,
+          l4: 0,
+          l5: 2,
+          best: 0
+        }
+      }
+    );
+  });
+
+  test.only('group by , no expectKeys', () => {
+    const data = [
+      { id: 1, name: 'a', score: 1 },
+      { id: 2, name: 'b', score: 22 },
+      { id: 3, name: 'c', score: 23 },
+      { id: 4, name: 'd', score: 45 },
+      { id: 5, name: 'e', score: 50 },
+      { id: 6, name: 'f', score: 11 },
+      { id: 7, name: 'g', score: 83 },
+      { id: 8, name: 'h', score: 90 }
+    ];
+    const res = nx.groupBy(data, (item) => {
+      if (item.score < 20) return 'l1';
+      if (item.score < 40 && item.score >= 20) return 'l2';
+      if (item.score < 60 && item.score >= 40) return 'l3';
+      if (item.score < 80 && item.score >= 60) return 'l4';
+      if (item.score >= 80) return 'l5';
+      if (item.score > 100) return 'best';
+    });
+    expect(res).toEqual({
+        l1: [{ id: 1, name: 'a', score: 1 }, { id: 6, name: 'f', score: 11 }],
+        l2: [{ id: 2, name: 'b', score: 22 }, { id: 3, name: 'c', score: 23 }],
+        l3: [{ id: 4, name: 'd', score: 45 }, { id: 5, name: 'e', score: 50 }],
+        l5: [{ id: 7, name: 'g', score: 83 }, { id: 8, name: 'h', score: 90 }],
+        __computed__: {
+          l1: 2,
+          l2: 2,
+          l3: 2,
+          l5: 2
+        }
+      }
+    );
+  });
 });
