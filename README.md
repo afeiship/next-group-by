@@ -26,7 +26,7 @@ const arr = [
   'wx://localResource'
 ];
 
-const res = nx.groupBy(arr, (_, item) => {
+const res = nx.groupBy(arr, (item) => {
   var rs = item.split('://');
   return rs.length === 2 ? rs[0] : 'normal';
 });
@@ -42,7 +42,12 @@ const res = nx.groupBy(arr, (_, item) => {
     'sldjfsld.jpg'
   ],
   http: [ 'http://www.agc.cn/1.jpg' ],
-  wx: [ 'wx://localResource' ]
+  wx: [ 'wx://localResource' ],
+  __computed__: {
+    normal: 6
+    http: 1
+    wx: 1
+  }
 }
 ```
 
