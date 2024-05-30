@@ -44,8 +44,8 @@ const res = nx.groupBy(arr, (item) => {
   http: [ 'http://www.agc.cn/1.jpg' ],
   wx: [ 'wx://localResource' ],
   __computed__: {
-    normal: 6
-    http: 1
+    normal: 6,
+    http: 1,
     wx: 1
   }
 }
