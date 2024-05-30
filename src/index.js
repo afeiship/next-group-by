@@ -1,12 +1,15 @@
 import nx from '@jswork/next';
 
 const defaults = {
-  expectKeys: []
+  expectKeys: [],
+  computedKey: '__computed__'
 };
 
 nx.groupBy = function(inArray, inTarget, inOptions) {
+  const { computedKey, expectKeys } = nx.mix(null, defaults, inOptions);
   const result = {};
-  const options = nx.mix(null, defaults, inOptions);
+  result[computedKey] = {};
+
   // group by target
   for (let index = 0; index < inArray.length; index++) {
     const value = inArray[index];
@@ -14,11 +17,18 @@ nx.groupBy = function(inArray, inTarget, inOptions) {
     const key = isString ? nx.get(value, inTarget) : inTarget(value, index, inArray);
     result[key] = (result[key] || []).concat(value);
   }
+
   // check expect keys
-  if (options.expectKeys.length) {
-    options.expectKeys.forEach((key) => {
+  if (expectKeys.length) {
+    expectKeys.forEach((key) => {
       if (!result[key]) result[key] = [];
     });
+  }
+
+  // stat keys
+  for (const key in result) {
+    if (key === computedKey) continue;
+    result[computedKey][key] = result[key].length;
   }
 
   return result;

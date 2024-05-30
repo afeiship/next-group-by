@@ -54,7 +54,11 @@ describe('next/groupBy', function() {
           action: 'feat',
           message: '7a03355d - feat: 非文本类型均支持添加多个'
         }
-      ]
+      ],
+      __computed__: {
+        fix: 3,
+        feat: 1
+      }
     });
   });
 
@@ -64,7 +68,9 @@ describe('next/groupBy', function() {
       return item.file.size ? 'wx' : 'old';
     });
 
-    expect(res).toEqual({ old: data });
+    expect(res).toEqual({
+      old: data, __computed__: { old: 2 }
+    });
   });
 
   test('group by fn with expectKeys', () => {
@@ -94,7 +100,15 @@ describe('next/groupBy', function() {
         l3: [{ id: 4, name: 'd', score: 45 }, { id: 5, name: 'e', score: 50 }],
         l5: [{ id: 7, name: 'g', score: 83 }, { id: 8, name: 'h', score: 90 }],
         l4: [],
-        best: []
+        best: [],
+        __computed__: {
+          l1: 2,
+          l2: 2,
+          l3: 2,
+          l4: 0,
+          l5: 2,
+          best: 0
+        }
       }
     );
   });
