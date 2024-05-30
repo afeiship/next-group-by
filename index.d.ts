@@ -1,7 +1,6 @@
-type GetKey = (key: number, obj: any) => string;
-type Transform = (key: number, value: any, arr: any[]) => any;
+type GetKey = (value: any, key: number, items: any[]) => string;
 type GroupedResult = Record<string, any[]>;
 
 interface NxStatic {
-  groupBy: (arr: any[], key: string | GetKey, tranform?: Transform) => GroupedResult;
+  groupBy: (arr: any[], key: string | GetKey, options?: { expectKeys?: string[] }) => GroupedResult;
 }
