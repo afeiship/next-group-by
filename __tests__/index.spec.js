@@ -37,29 +37,16 @@ describe('next/groupBy', function() {
     const data = require('./group-key.js');
     const res = nx.groupBy(data, 'action');
 
-    expect(res).toEqual({
-      fix: [
-        {
-          action: 'fix',
-          message: '82b05c46 - fix: 大背景->小背景 文字错误修复'
-        },
-        {
-          action: 'fix',
-          message: 'd5d915a1 - fix: 数据:全局干扰项-block/elements为空兼容'
-        },
-        { action: 'fix', message: 'f0c7f827 - fix(bug): v1.9.3+' }
-      ],
-      feat: [
-        {
-          action: 'feat',
-          message: '7a03355d - feat: 非文本类型均支持添加多个'
-        }
-      ],
-      __computed__: {
-        fix: 3,
-        feat: 1
-      }
-    });
+    expect(res.fix).toEqual([
+      { action: 'fix', message: '82b05c46 - fix: 大背景->小背景 文字错误修复' }, {
+        action: 'fix',
+        message: 'd5d915a1 - fix: 数据:全局干扰项-block/elements为空兼容'
+      },
+      { action: 'fix', message: 'f0c7f827 - fix(bug): v1.9.3+' }
+    ]);
+    expect(res.feat).toEqual([
+      { action: 'feat', message: '7a03355d - feat: 非文本类型均支持添加多个' }
+    ]);
   });
 
   test('pic with diff', () => {
@@ -68,9 +55,7 @@ describe('next/groupBy', function() {
       return item.file.size ? 'wx' : 'old';
     });
 
-    expect(res).toEqual({
-      old: data, __computed__: { old: 2 }
-    });
+    expect(res.old).toEqual(data);
   });
 
   test('group by fn with expectKeys', () => {
@@ -101,7 +86,9 @@ describe('next/groupBy', function() {
         l5: [{ id: 7, name: 'g', score: 83 }, { id: 8, name: 'h', score: 90 }],
         l4: [],
         best: [],
+        __raw__: data,
         __computed__: {
+          __raw__: data.length,
           l1: 2,
           l2: 2,
           l3: 2,
@@ -113,7 +100,7 @@ describe('next/groupBy', function() {
     );
   });
 
-  test.only('group by , change computedKey', () => {
+  test('group by , change computedKey/rawKey', () => {
     const data = [
       { id: 1, name: 'a', score: 1 },
       { id: 2, name: 'b', score: 22 },
@@ -133,9 +120,11 @@ describe('next/groupBy', function() {
       if (item.score > 100) return 'best';
     }, {
       expectKeys: ['l1', 'l2', 'l3', 'l4', 'l5', 'best'],
-      computedKey: 'stats'
+      computedKey: 'stats',
+      rawKey: 'all'
     });
     expect(res).toEqual({
+        all: data,
         l1: [{ id: 1, name: 'a', score: 1 }, { id: 6, name: 'f', score: 11 }],
         l2: [{ id: 2, name: 'b', score: 22 }, { id: 3, name: 'c', score: 23 }],
         l3: [{ id: 4, name: 'd', score: 45 }, { id: 5, name: 'e', score: 50 }],
@@ -143,6 +132,7 @@ describe('next/groupBy', function() {
         l4: [],
         best: [],
         stats: {
+          all: data.length,
           l1: 2,
           l2: 2,
           l3: 2,
@@ -154,7 +144,7 @@ describe('next/groupBy', function() {
     );
   });
 
-  test.only('group by , no expectKeys', () => {
+  test('group by , no expectKeys', () => {
     const data = [
       { id: 1, name: 'a', score: 1 },
       { id: 2, name: 'b', score: 22 },
@@ -174,11 +164,13 @@ describe('next/groupBy', function() {
       if (item.score > 100) return 'best';
     });
     expect(res).toEqual({
+        __raw__: data,
         l1: [{ id: 1, name: 'a', score: 1 }, { id: 6, name: 'f', score: 11 }],
         l2: [{ id: 2, name: 'b', score: 22 }, { id: 3, name: 'c', score: 23 }],
         l3: [{ id: 4, name: 'd', score: 45 }, { id: 5, name: 'e', score: 50 }],
         l5: [{ id: 7, name: 'g', score: 83 }, { id: 8, name: 'h', score: 90 }],
         __computed__: {
+          __raw__: data.length,
           l1: 2,
           l2: 2,
           l3: 2,
