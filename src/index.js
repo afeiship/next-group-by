@@ -6,11 +6,12 @@ const defaults = {
   computedKey: '__computed__'
 };
 
-nx.groupBy = function(inArray, inTarget, inOptions) {
+nx.groupBy = function (inArray, inTarget, inOptions) {
   const { computedKey, expectKeys, rawKey } = nx.mix(null, defaults, inOptions);
   const result = {};
-  result[computedKey] = {};
-  result[rawKey] = inArray.slice(0);
+
+  // support raw references
+  if (rawKey) result[rawKey] = inArray.slice(0);
 
   // group by target
   for (let index = 0; index < inArray.length; index++) {
@@ -20,18 +21,22 @@ nx.groupBy = function(inArray, inTarget, inOptions) {
     result[key] = (result[key] || []).concat(value);
   }
 
-  // check expect keys
-  if (expectKeys.length) {
-    expectKeys.forEach((key) => {
-      if (!result[key]) result[key] = [];
-      if (!result[computedKey][key]) result[computedKey][key] = 0;
-    });
-  }
+  // support __computed__
+  if (computedKey) {
+    result[computedKey] = {};
+    // check expect keys
+    if (expectKeys.length) {
+      expectKeys.forEach((key) => {
+        if (!result[key]) result[key] = [];
+        if (!result[computedKey][key]) result[computedKey][key] = 0;
+      });
+    }
 
-  // stat keys
-  for (const key in result) {
-    if (key === computedKey) continue;
-    result[computedKey][key] = result[key].length;
+    // stat keys
+    for (const key in result) {
+      if (key === computedKey) continue;
+      result[computedKey][key] = result[key].length;
+    }
   }
 
   return result;

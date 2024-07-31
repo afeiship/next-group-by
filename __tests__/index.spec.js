@@ -1,7 +1,7 @@
 require('../src');
 
-describe('next/groupBy', function() {
-  test('nx.groupBy odd/eve', function() {
+describe('next/groupBy', function () {
+  test('nx.groupBy odd/eve', function () {
     const arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     const res1 = nx.groupBy(arr1, (item) => {
@@ -12,7 +12,7 @@ describe('next/groupBy', function() {
     expect(res1['1'].length).toBe(5);
   });
 
-  test('nx.groupBy image type', function() {
+  test('nx.groupBy image type', function () {
     const arr = [
       'sljflsdjf.jpg',
       'bb.jpg',
@@ -38,7 +38,8 @@ describe('next/groupBy', function() {
     const res = nx.groupBy(data, 'action');
 
     expect(res.fix).toEqual([
-      { action: 'fix', message: '82b05c46 - fix: 大背景->小背景 文字错误修复' }, {
+      { action: 'fix', message: '82b05c46 - fix: 大背景->小背景 文字错误修复' },
+      {
         action: 'fix',
         message: 'd5d915a1 - fix: 数据:全局干扰项-block/elements为空兼容'
       },
@@ -69,35 +70,50 @@ describe('next/groupBy', function() {
       { id: 7, name: 'g', score: 83 },
       { id: 8, name: 'h', score: 90 }
     ];
-    const res = nx.groupBy(data, (item) => {
-      if (item.score < 20) return 'l1';
-      if (item.score < 40 && item.score >= 20) return 'l2';
-      if (item.score < 60 && item.score >= 40) return 'l3';
-      if (item.score < 80 && item.score >= 60) return 'l4';
-      if (item.score >= 80) return 'l5';
-      if (item.score > 100) return 'best';
-    }, {
-      expectKeys: ['l1', 'l2', 'l3', 'l4', 'l5', 'best']
-    });
-    expect(res).toEqual({
-        l1: [{ id: 1, name: 'a', score: 1 }, { id: 6, name: 'f', score: 11 }],
-        l2: [{ id: 2, name: 'b', score: 22 }, { id: 3, name: 'c', score: 23 }],
-        l3: [{ id: 4, name: 'd', score: 45 }, { id: 5, name: 'e', score: 50 }],
-        l5: [{ id: 7, name: 'g', score: 83 }, { id: 8, name: 'h', score: 90 }],
-        l4: [],
-        best: [],
-        __raw__: data,
-        __computed__: {
-          __raw__: data.length,
-          l1: 2,
-          l2: 2,
-          l3: 2,
-          l4: 0,
-          l5: 2,
-          best: 0
-        }
+    const res = nx.groupBy(
+      data,
+      (item) => {
+        if (item.score < 20) return 'l1';
+        if (item.score < 40 && item.score >= 20) return 'l2';
+        if (item.score < 60 && item.score >= 40) return 'l3';
+        if (item.score < 80 && item.score >= 60) return 'l4';
+        if (item.score >= 80) return 'l5';
+        if (item.score > 100) return 'best';
+      },
+      {
+        expectKeys: ['l1', 'l2', 'l3', 'l4', 'l5', 'best']
       }
     );
+    expect(res).toEqual({
+      l1: [
+        { id: 1, name: 'a', score: 1 },
+        { id: 6, name: 'f', score: 11 }
+      ],
+      l2: [
+        { id: 2, name: 'b', score: 22 },
+        { id: 3, name: 'c', score: 23 }
+      ],
+      l3: [
+        { id: 4, name: 'd', score: 45 },
+        { id: 5, name: 'e', score: 50 }
+      ],
+      l5: [
+        { id: 7, name: 'g', score: 83 },
+        { id: 8, name: 'h', score: 90 }
+      ],
+      l4: [],
+      best: [],
+      __raw__: data,
+      __computed__: {
+        __raw__: data.length,
+        l1: 2,
+        l2: 2,
+        l3: 2,
+        l4: 0,
+        l5: 2,
+        best: 0
+      }
+    });
   });
 
   test('group by , change computedKey/rawKey', () => {
@@ -111,37 +127,52 @@ describe('next/groupBy', function() {
       { id: 7, name: 'g', score: 83 },
       { id: 8, name: 'h', score: 90 }
     ];
-    const res = nx.groupBy(data, (item) => {
-      if (item.score < 20) return 'l1';
-      if (item.score < 40 && item.score >= 20) return 'l2';
-      if (item.score < 60 && item.score >= 40) return 'l3';
-      if (item.score < 80 && item.score >= 60) return 'l4';
-      if (item.score >= 80) return 'l5';
-      if (item.score > 100) return 'best';
-    }, {
-      expectKeys: ['l1', 'l2', 'l3', 'l4', 'l5', 'best'],
-      computedKey: 'stats',
-      rawKey: 'all'
-    });
-    expect(res).toEqual({
-        all: data,
-        l1: [{ id: 1, name: 'a', score: 1 }, { id: 6, name: 'f', score: 11 }],
-        l2: [{ id: 2, name: 'b', score: 22 }, { id: 3, name: 'c', score: 23 }],
-        l3: [{ id: 4, name: 'd', score: 45 }, { id: 5, name: 'e', score: 50 }],
-        l5: [{ id: 7, name: 'g', score: 83 }, { id: 8, name: 'h', score: 90 }],
-        l4: [],
-        best: [],
-        stats: {
-          all: data.length,
-          l1: 2,
-          l2: 2,
-          l3: 2,
-          l4: 0,
-          l5: 2,
-          best: 0
-        }
+    const res = nx.groupBy(
+      data,
+      (item) => {
+        if (item.score < 20) return 'l1';
+        if (item.score < 40 && item.score >= 20) return 'l2';
+        if (item.score < 60 && item.score >= 40) return 'l3';
+        if (item.score < 80 && item.score >= 60) return 'l4';
+        if (item.score >= 80) return 'l5';
+        if (item.score > 100) return 'best';
+      },
+      {
+        expectKeys: ['l1', 'l2', 'l3', 'l4', 'l5', 'best'],
+        computedKey: 'stats',
+        rawKey: 'all'
       }
     );
+    expect(res).toEqual({
+      all: data,
+      l1: [
+        { id: 1, name: 'a', score: 1 },
+        { id: 6, name: 'f', score: 11 }
+      ],
+      l2: [
+        { id: 2, name: 'b', score: 22 },
+        { id: 3, name: 'c', score: 23 }
+      ],
+      l3: [
+        { id: 4, name: 'd', score: 45 },
+        { id: 5, name: 'e', score: 50 }
+      ],
+      l5: [
+        { id: 7, name: 'g', score: 83 },
+        { id: 8, name: 'h', score: 90 }
+      ],
+      l4: [],
+      best: [],
+      stats: {
+        all: data.length,
+        l1: 2,
+        l2: 2,
+        l3: 2,
+        l4: 0,
+        l5: 2,
+        best: 0
+      }
+    });
   });
 
   test('group by , no expectKeys', () => {
@@ -164,19 +195,54 @@ describe('next/groupBy', function() {
       if (item.score > 100) return 'best';
     });
     expect(res).toEqual({
-        __raw__: data,
-        l1: [{ id: 1, name: 'a', score: 1 }, { id: 6, name: 'f', score: 11 }],
-        l2: [{ id: 2, name: 'b', score: 22 }, { id: 3, name: 'c', score: 23 }],
-        l3: [{ id: 4, name: 'd', score: 45 }, { id: 5, name: 'e', score: 50 }],
-        l5: [{ id: 7, name: 'g', score: 83 }, { id: 8, name: 'h', score: 90 }],
-        __computed__: {
-          __raw__: data.length,
-          l1: 2,
-          l2: 2,
-          l3: 2,
-          l5: 2
-        }
+      __raw__: data,
+      l1: [
+        { id: 1, name: 'a', score: 1 },
+        { id: 6, name: 'f', score: 11 }
+      ],
+      l2: [
+        { id: 2, name: 'b', score: 22 },
+        { id: 3, name: 'c', score: 23 }
+      ],
+      l3: [
+        { id: 4, name: 'd', score: 45 },
+        { id: 5, name: 'e', score: 50 }
+      ],
+      l5: [
+        { id: 7, name: 'g', score: 83 },
+        { id: 8, name: 'h', score: 90 }
+      ],
+      __computed__: {
+        __raw__: data.length,
+        l1: 2,
+        l2: 2,
+        l3: 2,
+        l5: 2
       }
-    );
+    });
+  });
+
+  test('computedKey/rawKey is null', () => {
+    const inventory = [
+      { name: 'asparagus', type: 'vegetables', quantity: 5 },
+      { name: 'bananas', type: 'fruit', quantity: 0 },
+      { name: 'goat', type: 'meat', quantity: 23 },
+      { name: 'cherries', type: 'fruit', quantity: 5 },
+      { name: 'fish', type: 'meat', quantity: 22 }
+    ];
+
+    const res = nx.groupBy(inventory, 'type', { rawKey: null, computedKey: null });
+
+    expect(res).toEqual({
+      vegetables: [{ name: 'asparagus', type: 'vegetables', quantity: 5 }],
+      fruit: [
+        { name: 'bananas', type: 'fruit', quantity: 0 },
+        { name: 'cherries', type: 'fruit', quantity: 5 }
+      ],
+      meat: [
+        { name: 'goat', type: 'meat', quantity: 23 },
+        { name: 'fish', type: 'meat', quantity: 22 }
+      ]
+    });
   });
 });
